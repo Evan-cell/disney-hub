@@ -1,20 +1,40 @@
 import React from 'react'
+import { useDispatch,useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { selectUserName,selectUserEmail,selectUserPhoto, setUserLoginDetails } from '../features/user/UserSlice'
 import styled from 'styled-components'
 import { auth, provider } from '../Firebase'
 function Header(props) {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const username = useSelector(selectUserName)
+    const userphoto = useSelector(selectUserPhoto)
+    const useremail = useSelector(selectUserEmail)
     const handleAuth = () =>{
         auth.signInWithPopup(provider).then((result)=>{
-            console.log(result)
+            setUser(result.user)
         }).catch((error)=>{
             alert(error.message)
         })
+    }
+    const setUser = (user) =>{
+        dispatch(
+            setUserLoginDetails({
+                name:user.displayName,
+                email:user.email,
+                photo:user.photoURL,
+            })
+        )
     }
   return (
     <Nav>
         <Logo>
             <img src="/images/logo.svg" alt="Disney" />
         </Logo>
-        <NavMenu>
+        
+          {!username ? <Login onClick={handleAuth}>Login</Login> : <>
+
+          <NavMenu>
             <a href="/home">
               <img src="/images/home-icon.svg" alt="HOME" />
               <span>HOME</span>
@@ -40,10 +60,14 @@ function Header(props) {
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <Login onClick={handleAuth}>Login</Login>
+          <UserImg src={userphoto} alt={username} />
+           </>}
     </Nav>
   )
 }
+const UserImg = styled.img`
+height: 100%;
+`
 const Nav = styled.nav`
 position: fixed;
 top: 0;
