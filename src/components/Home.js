@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import ImageSlider from './ImageSlider'
+import NewDisney from './NewDisney'
+import Originals from './Originals'
 import Recommendations from './Recommendations'
+import Trending from './Trending'
 import Viewers from './Viewers'
 function Home(props) {
   return (
@@ -9,6 +12,9 @@ function Home(props) {
         <ImageSlider />
         <Viewers />
         <Recommendations />
+        <NewDisney />
+        <Originals />
+        <Trending />
     </Container>
   )
 }
