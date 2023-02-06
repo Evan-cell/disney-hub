@@ -16,6 +16,7 @@ function App() {
                 <Route exact path ='/home'>
                     <Home />
                 </Route>
+                <Route exact path='/detail/:id'></Route>
             </Switch>
         </Router>
        

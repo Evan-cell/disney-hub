@@ -1,31 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectTrending } from '../features/movies/MovieSlice'
 function Trending() {
+    const movies = useSelector(selectTrending)
   return (
     <Container>
     <h4>Trending</h4>
     <Content>
-        <Wrap>
-            <Link to='/'>
-                <img src="https://images.unsplash.com/photo-1634221558053-3a617b5201d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGRpc25leXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-            </Link>
-        </Wrap>
-        <Wrap>
-            <Link to='/'>
-                <img src="" alt="" />
-            </Link>
-        </Wrap>
-        <Wrap>
-            <Link to='/'>
-                <img src="" alt="" />
-            </Link>
-        </Wrap>
-        <Wrap>
-            <Link to='/'>
-                <img src="" alt="" />
-            </Link>
-        </Wrap>
+        {movies &&
+          movies.map((movie, key) => (
+            <Wrap key={key}>
+              {movie.id}
+              <Link to={`/detail/` + movie.id}>
+                <img src={movie.cardImg} alt={movie.title} />
+              </Link>
+            </Wrap>
+          ))}
     </Content>
 </Container>
 )
@@ -72,6 +64,5 @@ transform: scale(1.05);
 border-color: rgba(249, 249, 249, 0.8);
 }
 `;
-
 
 export default Trending
